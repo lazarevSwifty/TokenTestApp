@@ -2,7 +2,8 @@ import UIKit
 
 protocol ModelBuilderProtocol {
     static func createMainModule() -> UIViewController
-//    static func createAddingModule() -> UIViewController
+    static func createAddingModule() -> UIViewController
+    static func createDetailModule(entries: EntriesData) -> UIViewController
 
 }
 
@@ -18,7 +19,14 @@ class ModelBuilder: ModelBuilderProtocol {
     
     static func createAddingModule() -> UIViewController {
         let view = AddingViewController()
-        view.presenter = AddingPresenter(view: view)
+        let networkService = NetworkServiceImp()
+        view.presenter = AddingPresenter(view: view, networkService: networkService)
+        return view
+    }
+    
+    static func createDetailModule(entries: EntriesData) -> UIViewController {
+        let view = DetailViewController()
+        view.presenter = DetailPresenter(view: view, entries: entries)
         return view
     }
 

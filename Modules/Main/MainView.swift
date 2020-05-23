@@ -4,7 +4,7 @@ class MainView: UIView {
     
     let tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
-        view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.register(CustomMainCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
         return view
     }()
     

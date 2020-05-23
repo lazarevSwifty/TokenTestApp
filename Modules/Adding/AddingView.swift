@@ -3,7 +3,7 @@ import UIKit
 class AddingView: UIView {
     
     let textView =  UITextView()
-    let copyButton = UIButton()
+    let cancelButton = UIButton()
     let saveButton = UIButton()
     
     override init(frame: CGRect) {
@@ -17,18 +17,21 @@ class AddingView: UIView {
     }
     
     func commonInit() {
+        backgroundColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
         
-        copyButton.backgroundColor = .red
-        copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.layer.cornerRadius = 10
-        saveButton.backgroundColor = .green
+        cancelButton.backgroundColor = .lightGray
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.layer.cornerRadius = 10
+        cancelButton.setTitle("Отменить", for: .normal)
+        saveButton.backgroundColor = .lightGray
+        saveButton.setTitle("Сохранить", for: .normal)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.layer.cornerRadius = 10
         
         addSubview(textView)
-        addSubview(copyButton)
+        addSubview(cancelButton)
         addSubview(saveButton)
     }
     
@@ -38,18 +41,18 @@ class AddingView: UIView {
             textView.leftAnchor.constraint(equalTo: leftAnchor),
             textView.rightAnchor.constraint(equalTo: rightAnchor),
             
-            copyButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
-            copyButton.leftAnchor.constraint(equalTo: leftAnchor),
-            copyButton.bottomAnchor.constraint(equalTo: bottomAnchor),
-            copyButton.widthAnchor.constraint(equalTo: saveButton.widthAnchor, multiplier: 1),
-            copyButton.heightAnchor.constraint(equalToConstant: 50),
+            cancelButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
+            cancelButton.leftAnchor.constraint(equalTo: leftAnchor),
+            cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            cancelButton.widthAnchor.constraint(equalTo: saveButton.widthAnchor, multiplier: 1),
+            cancelButton.heightAnchor.constraint(equalToConstant: 50),
             
             saveButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
-            saveButton.leftAnchor.constraint(equalTo: copyButton.rightAnchor, constant: 10),
+            saveButton.leftAnchor.constraint(equalTo: cancelButton.rightAnchor, constant: 10),
             saveButton.rightAnchor.constraint(equalTo: rightAnchor, constant: 0),
             saveButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
-            saveButton.heightAnchor.constraint(equalTo: copyButton.heightAnchor, multiplier: 1)
+            saveButton.heightAnchor.constraint(equalTo: cancelButton.heightAnchor, multiplier: 1)
         ])
     }
-    
+
 }

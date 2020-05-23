@@ -1,16 +1,29 @@
-//
-//  AppDelegate.swift
-//  TokenTestApp
-//
-//  Created by Владислав Лазарев on 20.05.2020.
-//  Copyright © 2020 Владислав Лазарев. All rights reserved.
-//
-
 import UIKit
+import Network
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private func internetConnectivity() {
+           let monitor = NWPathMonitor()
+           
+           monitor.pathUpdateHandler = { path in
+               if path.status == .satisfied {
+                   DispatchQueue.main.async {
+                       NotificationCenter.default.post(name: .internetStatus, object: true)
+                   }
+               } else {
+                   DispatchQueue.main.async {
+                       NotificationCenter.default.post(name: .internetStatus, object: false)
+                   }
+               }
+           }
+           
+           //            print(path.isExpensive)
+           
+           let queue = DispatchQueue(label: "Monitor")
+           monitor.start(queue: queue)
+       }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

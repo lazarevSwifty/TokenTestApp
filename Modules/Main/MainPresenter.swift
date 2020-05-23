@@ -7,12 +7,12 @@ protocol MainViewProtocol: AnyObject {
 protocol MainPresenterProtocol: AnyObject {
     init(view: MainViewProtocol,networkService: NetworkService, router: MainRouterProtocol)
     func present()
-    //var posts: [Post]? {get set}
-
+    func presentDetail(entry: EntriesData?)
+    func fetchData() 
+    var entries: Entries? {get set}
 }
 
 class MainPresenter: MainPresenterProtocol {
-
 
     let networkService: NetworkService?
     var router: MainRouterProtocol?
@@ -20,63 +20,46 @@ class MainPresenter: MainPresenterProtocol {
     weak var view: MainViewProtocol?
     
     var session: Session?
+    var entries: Entries?
+    var sessionStr: String?
     
     required init(view: MainViewProtocol, networkService: NetworkService, router: MainRouterProtocol) {
         self.view = view
         self.router = router
         self.networkService = networkService
-        obtainImages()
+        fetchData()
     }
     
-    
-    func obtainImages() {
-//        networkService.fetchImages(completion: { [weak self] result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let photos):
-//                    //self?.flickrPhotos = photos
-//                    //self?.view?.succes()
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            }
-//        })
-        
+    func fetchData() {
+        if let session = UserSettings.getSession() {
+            print(session)
+            self.networkService?.fetchEntries(session: session, completion: {  data in
+                DispatchQueue.main.async {
+                    self.entries = data
+                    print(data.data.count)
+                    if data.data.count > 1 {
+                        self.view?.success()}
+                }
+            })
+        } else {
         networkService?.fetchSession(completion: { [weak self] data in
             DispatchQueue.main.async {
                 self?.session = data
+                let str = data.data.session
+                UserSettings.setSession(str)
+//                self?.networkService?.fetchEntries(session: str, completion: {  data in
+//                    DispatchQueue.main.async {
+//                        self?.entries = data
+//                        self?.view?.success()
+//                    }
+//                })
             }
         })
-        
-//        let parameters: [String: String] = [
-//           "a": "get_entries",
-//            "name": "Jack & Jill"
-//        ]
-        let url = URL(string: "https://bnet.i-partner.ru/testAPI/")
-        guard let requestUrl = url else { fatalError() }
-        var request = URLRequest(url: requestUrl)
-        request.setValue(Constants.token, forHTTPHeaderField: "token")
-        let postString = "a=get_entries & session=\(session?.data.session)";
-        request.httpBody = postString.data(using: String.Encoding.utf8);
-        request.httpMethod = "POST"
-        
-        let session = URLSession.shared
-
-        session.dataTask(with: request) { (data, response, error) in
-            if let responseData = data {
-                print(String.init(data:data!,  encoding: .utf8)!)
-                do {
-                    let list = try JSONDecoder().decode(Entries.self, from: responseData)
-                } catch {
-                    print(error)
-                }
-            }
-        }.resume()
-        
+        }
     }
     
     func refreshData() {
-        obtainImages()
+        fetchData()
         view?.success()
     }
     
@@ -84,5 +67,10 @@ class MainPresenter: MainPresenterProtocol {
         router?.goToAddingVC()
     }
     
+    func presentDetail(entry: EntriesData?) {
+        if let data = entry {
+            router?.goToDetailVC(entries: data)
+        }
+    }
 }
 
