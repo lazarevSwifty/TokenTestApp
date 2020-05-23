@@ -54,5 +54,4 @@ class AddingView: UIView {
             saveButton.heightAnchor.constraint(equalTo: cancelButton.heightAnchor, multiplier: 1)
         ])
     }
-
 }

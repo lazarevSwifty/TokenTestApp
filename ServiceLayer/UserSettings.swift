@@ -11,5 +11,4 @@ struct UserSettings {
         let session = userDefault.string(forKey: Constants.userDefaultKey)
         return session
     }
-    
 }

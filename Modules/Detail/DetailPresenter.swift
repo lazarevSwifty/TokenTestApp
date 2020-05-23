@@ -24,7 +24,6 @@ class DetailPresenter: DetailViewPresenterProtocol {
     func setUI() {
         self.view?.setUI()
     }
-    
 }
 
 

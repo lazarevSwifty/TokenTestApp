@@ -4,7 +4,6 @@ protocol ModelBuilderProtocol {
     static func createMainModule() -> UIViewController
     static func createAddingModule() -> UIViewController
     static func createDetailModule(entries: EntriesData) -> UIViewController
-
 }
 
 class ModelBuilder: ModelBuilderProtocol {

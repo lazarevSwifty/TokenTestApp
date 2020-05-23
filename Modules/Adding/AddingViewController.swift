@@ -31,7 +31,6 @@ extension AddingViewController: AddingViewProtocol {
     func showSuccesAlert() {
         showAlert(alertText: "Отлично", alertMessage: "Данные сохранены", title: "Успешно")
         view().textView.text = ""
-
     }
     
     func dismissVC() {
@@ -45,5 +44,4 @@ extension AddingViewController: AddingViewProtocol {
     func getBodyText() {
         presenter?.bodyText = view().textView.text
     }
-
 }

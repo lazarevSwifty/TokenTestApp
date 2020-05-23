@@ -1,4 +1,5 @@
 import UIKit
+
 protocol MainRouterProtocol: AnyObject {
     func goToAddingVC()
     func goToDetailVC(entries: EntriesData)

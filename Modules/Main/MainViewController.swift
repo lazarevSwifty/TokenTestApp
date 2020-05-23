@@ -24,6 +24,7 @@ class MainViewController: UIViewController, ViewSpecificController {
         let canConnectWithoutUserInteraction = canConnection && !flags.contains(.interventionRequired)
         return isReachable && (!needsConnection || canConnectWithoutUserInteraction)
     }
+    
     func setupUI() {
         let addPostButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPost))
         navigationItem.rightBarButtonItem = addPostButton
@@ -44,8 +45,7 @@ class MainViewController: UIViewController, ViewSpecificController {
         
         NotificationCenter.default.removeObserver(self, name: .internetStatus, object: nil)
     }
-
-
+    
     @objc private func internetStatus(_ notification: Notification? = nil) {
         if let status = notification?.object as? Bool {
             if !status {

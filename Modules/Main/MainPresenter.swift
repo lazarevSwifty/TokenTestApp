@@ -4,6 +4,7 @@ protocol MainViewProtocol: AnyObject {
     func success()
     
 }
+
 protocol MainPresenterProtocol: AnyObject {
     init(view: MainViewProtocol,networkService: NetworkService, router: MainRouterProtocol)
     func present()

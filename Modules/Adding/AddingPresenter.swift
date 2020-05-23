@@ -6,6 +6,7 @@ protocol AddingViewProtocol: AnyObject {
     func showSuccesAlert()
     func dismissVC()
 }
+
 @objc protocol AddingPresenterProtocol: AnyObject {
     @objc func saveButtonClick()
     @objc func cancelButtonClick()
