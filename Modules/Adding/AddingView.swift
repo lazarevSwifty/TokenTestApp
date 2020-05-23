@@ -43,14 +43,14 @@ class AddingView: UIView {
             
             cancelButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             cancelButton.leftAnchor.constraint(equalTo: leftAnchor),
-            cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             cancelButton.widthAnchor.constraint(equalTo: saveButton.widthAnchor, multiplier: 1),
             cancelButton.heightAnchor.constraint(equalToConstant: 50),
             
             saveButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             saveButton.leftAnchor.constraint(equalTo: cancelButton.rightAnchor, constant: 10),
             saveButton.rightAnchor.constraint(equalTo: rightAnchor, constant: 0),
-            saveButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            saveButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             saveButton.heightAnchor.constraint(equalTo: cancelButton.heightAnchor, multiplier: 1)
         ])
     }

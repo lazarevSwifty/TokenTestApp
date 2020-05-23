@@ -33,7 +33,6 @@ class MainPresenter: MainPresenterProtocol {
     
     func fetchData() {
         if let session = UserSettings.getSession() {
-            print(session)
             self.networkService?.fetchEntries(session: session, completion: {  data in
                 DispatchQueue.main.async {
                     self.entries = data
