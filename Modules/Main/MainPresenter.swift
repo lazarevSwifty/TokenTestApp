@@ -36,25 +36,17 @@ class MainPresenter: MainPresenterProtocol {
             self.networkService?.fetchEntries(session: session, completion: {  data in
                 DispatchQueue.main.async {
                     self.entries = data
-                    print(data.data.count)
-                    if data.data.count > 1 {
-                        self.view?.success()}
+                    self.view?.success()
                 }
             })
         } else {
-        networkService?.fetchSession(completion: { [weak self] data in
-            DispatchQueue.main.async {
-                self?.session = data
-                let str = data.data.session
-                UserSettings.setSession(str)
-//                self?.networkService?.fetchEntries(session: str, completion: {  data in
-//                    DispatchQueue.main.async {
-//                        self?.entries = data
-//                        self?.view?.success()
-//                    }
-//                })
-            }
-        })
+            networkService?.fetchSession(completion: { [weak self] data in
+                DispatchQueue.main.async {
+                    self?.session = data
+                    let str = data.data.session
+                    UserSettings.setSession(str)
+                }
+            })
         }
     }
     

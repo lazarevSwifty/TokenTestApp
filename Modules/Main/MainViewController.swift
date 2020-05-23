@@ -1,14 +1,10 @@
 import UIKit
 import SystemConfiguration
-//import Reachability
 
 class MainViewController: UIViewController, ViewSpecificController {
-    
     typealias RootView = MainView
     
     var presenter: MainPresenterProtocol?
-    //private let rechability = SCNetworkReachabilityCreateWithName(nil,"test")
-    //let reachability = try! Reachability()
 
     override func loadView() {
         view =  MainView()
@@ -19,18 +15,7 @@ class MainViewController: UIViewController, ViewSpecificController {
         view().tableView.delegate = self
         view().tableView.dataSource = self
         setupUI()
-//        reachability.whenUnreachable = { _ in
-//            print("Not reachable")
-//        }
     }
-    
-//    private func checkReachable() {
-//        var flags = SCNetworkReachabilityFlags()
-//        SCNetworkReachabilityGetFlags(self.rechability!, &flags)
-//        if (!isNetworkReachable(with: flags)) {
-//            self.showAlert(alertText: "Ошибка", alertMessage: "Отсутствует подключение к интернету", title: "Повторить")
-//        }
-//    }
     
     func isNetworkReachable(with flags: SCNetworkReachabilityFlags) -> Bool {
         let isReachable = flags.contains(.reachable)
@@ -49,14 +34,22 @@ class MainViewController: UIViewController, ViewSpecificController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //checkReachable()
-
+        super.viewWillAppear(animated)
+        presenter?.fetchData()
+        NotificationCenter.default.addObserver(self, selector: #selector(internetStatus), name: .internetStatus, object: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: .internetStatus, object: nil)
+    }
+
 
     @objc private func internetStatus(_ notification: Notification? = nil) {
         if let status = notification?.object as? Bool {
             if !status {
-                self.showAlert(alertText: "Ошибка", alertMessage:  "Отсутсвует подключение к интернету", title: "Повторить")
+                showAlert(alertText: "Ошибка", alertMessage:  "Отсутсвует подключение к интернету", title: "Повторить")
             }
         }
     }
@@ -66,8 +59,6 @@ extension MainViewController: MainViewProtocol {
     func success() {
         view().tableView.reloadData()
     }
-    
-    
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -91,5 +82,4 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let data = presenter?.entries?.data[indexPath.section][indexPath.row]
         presenter?.presentDetail(entry: data)
     }
-    
 }

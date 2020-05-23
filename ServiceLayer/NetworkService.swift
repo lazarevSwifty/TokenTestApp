@@ -61,7 +61,6 @@ final class NetworkServiceImp: NetworkService {
         request.httpBody = postString.data(using: String.Encoding.utf8);
         request.httpMethod = "POST"
         
-        print(request.cURL)
         let session = URLSession.shared
         
         session.dataTask(with: request) { (data, response, error) in
