@@ -4,18 +4,17 @@ protocol NetworkService: AnyObject {
     func fetchSession(completion: @escaping (Session) -> Void)
     func fetchEntries(session: String, completion: @escaping (Entries) -> Void)
     func addEntry(body: String, session: String, completion: @escaping (Entry) -> Void)
-
 }
 
 final class NetworkServiceImp: NetworkService {
     func fetchSession(completion: @escaping (Session) -> Void) {
-        let url = URL(string: "https://bnet.i-partner.ru/testAPI/")
+        let url = URL(string: Constants.apiUrl)
         guard let requestUrl = url else { fatalError() }
         var request = URLRequest(url: requestUrl)
-        request.setValue(Constants.token, forHTTPHeaderField: "token")
+        request.setValue(Constants.token, forHTTPHeaderField: Constants.httpHeader)
         let postString = "a=new_session";
         request.httpBody = postString.data(using: String.Encoding.utf8);
-        request.httpMethod = "POST"
+        request.httpMethod = Constants.httpMethod
         let session = URLSession.shared
         
         session.dataTask(with: request) { (data, response, error) in
@@ -31,13 +30,13 @@ final class NetworkServiceImp: NetworkService {
     }
     
     func fetchEntries(session: String, completion: @escaping (Entries) -> Void) {
-        let url = URL(string: "https://bnet.i-partner.ru/testAPI/")
+        let url = URL(string: Constants.apiUrl)
         guard let requestUrl = url else { fatalError() }
         var request = URLRequest(url: requestUrl)
-        request.setValue(Constants.token, forHTTPHeaderField: "token")
+        request.setValue(Constants.token, forHTTPHeaderField: Constants.httpHeader)
         let postString = "a=get_entries&session=\(session)";
         request.httpBody = postString.data(using: String.Encoding.utf8);
-        request.httpMethod = "POST"
+        request.httpMethod = Constants.httpMethod
         let urlSession = URLSession.shared
 
         urlSession.dataTask(with: request) { (data, response, error) in
@@ -53,13 +52,13 @@ final class NetworkServiceImp: NetworkService {
     }
     
     func addEntry(body: String, session: String, completion: @escaping (Entry) -> Void)  {
-        let url = URL(string: "https://bnet.i-partner.ru/testAPI/")
+        let url = URL(string: Constants.apiUrl)
         guard let requestUrl = url else { fatalError() }
         var request = URLRequest(url: requestUrl)
-        request.setValue(Constants.token, forHTTPHeaderField: "token")
+        request.setValue(Constants.token, forHTTPHeaderField: Constants.httpHeader)
         let postString = "a=add_entry&session=\(session)&body=\(body)";
         request.httpBody = postString.data(using: String.Encoding.utf8);
-        request.httpMethod = "POST"
+        request.httpMethod = Constants.httpMethod
         
         let session = URLSession.shared
         

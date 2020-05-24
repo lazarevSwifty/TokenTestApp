@@ -28,5 +28,4 @@ class ModelBuilder: ModelBuilderProtocol {
         view.presenter = DetailPresenter(view: view, entries: entries)
         return view
     }
-
 }

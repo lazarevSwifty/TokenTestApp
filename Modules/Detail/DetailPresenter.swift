@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 
 protocol DetailViewProtocol: AnyObject {
     func setUI()
@@ -22,7 +23,9 @@ class DetailPresenter: DetailViewPresenterProtocol {
     }
     
     func setUI() {
-        self.view?.setUI()
+        DispatchQueue.main.async {
+            self.view?.setUI()
+        }
     }
 }
 

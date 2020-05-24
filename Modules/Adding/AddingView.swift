@@ -19,14 +19,14 @@ class AddingView: UIView {
     func commonInit() {
         backgroundColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
+        textView.font = UIFont(name: Constants.textViewFont, size: 18)
         
         cancelButton.backgroundColor = .lightGray
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.layer.cornerRadius = 10
-        cancelButton.setTitle("Отменить", for: .normal)
+        cancelButton.setTitle(Constants.cancelButton, for: .normal)
         saveButton.backgroundColor = .lightGray
-        saveButton.setTitle("Сохранить", for: .normal)
+        saveButton.setTitle(Constants.saveButton, for: .normal)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.layer.cornerRadius = 10
         

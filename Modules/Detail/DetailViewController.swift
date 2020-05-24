@@ -8,19 +8,12 @@ class DetailViewController: UIViewController, ViewSpecificController {
     override func loadView() {
         view =  DetailView()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
 }
 
 extension DetailViewController: DetailViewProtocol {
     func setUI() {
-        DispatchQueue.main.async {
-            self.view().daLabel.text = self.presenter?.entries.da
-            self.view().dmLabel.text = self.presenter?.entries.dm
-            self.view().bodyTextView.text = self.presenter?.entries.body
-        }
+        view().daLabel.text = presenter?.entries.da
+        view().dmLabel.text = presenter?.entries.dm
+        view().bodyTextView.text = presenter?.entries.body
     }
 }

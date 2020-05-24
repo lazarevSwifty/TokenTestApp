@@ -29,7 +29,7 @@ extension AddingViewController: UITextViewDelegate {
 
 extension AddingViewController: AddingViewProtocol {
     func showSuccesAlert() {
-        showAlert(alertText: "Отлично", alertMessage: "Данные сохранены", title: "Успешно")
+        showAlert(alertText: Constants.alertText, alertMessage: Constants.alertMessage, title: Constants.alertTitle)
         view().textView.text = ""
     }
     
@@ -38,7 +38,7 @@ extension AddingViewController: AddingViewProtocol {
     }
     
     func showErrorAlert() {
-        showAlert(alertText: "Ошибка", alertMessage: "Введите текст", title: "Ок")
+        showAlert(alertText: Constants.alertError, alertMessage: Constants.alertErrorMes, title: Constants.alertTitle)
     }
     
     func getBodyText() {

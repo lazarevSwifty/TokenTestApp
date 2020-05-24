@@ -2,14 +2,15 @@ import Foundation
 
 protocol MainViewProtocol: AnyObject {
     func success()
-    
+    func showConnectAlert()
 }
 
 protocol MainPresenterProtocol: AnyObject {
     init(view: MainViewProtocol,networkService: NetworkService, router: MainRouterProtocol)
     func present()
     func presentDetail(entry: EntriesData?)
-    func fetchData() 
+    func fetchData()
+    func showAlert()
     var entries: Entries? {get set}
 }
 
@@ -63,6 +64,10 @@ class MainPresenter: MainPresenterProtocol {
         if let data = entry {
             router?.goToDetailVC(entries: data)
         }
+    }
+    
+    func showAlert() {
+        view?.showConnectAlert()
     }
 }
 

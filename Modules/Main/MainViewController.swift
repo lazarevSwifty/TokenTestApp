@@ -17,14 +17,6 @@ class MainViewController: UIViewController, ViewSpecificController {
         setupUI()
     }
     
-    func isNetworkReachable(with flags: SCNetworkReachabilityFlags) -> Bool {
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        let canConnection = flags.contains(.connectionOnDemand) || flags.contains(.connectionOnTraffic)
-        let canConnectWithoutUserInteraction = canConnection && !flags.contains(.interventionRequired)
-        return isReachable && (!needsConnection || canConnectWithoutUserInteraction)
-    }
-    
     func setupUI() {
         let addPostButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPost))
         navigationItem.rightBarButtonItem = addPostButton
@@ -42,20 +34,23 @@ class MainViewController: UIViewController, ViewSpecificController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         NotificationCenter.default.removeObserver(self, name: .internetStatus, object: nil)
     }
     
     @objc private func internetStatus(_ notification: Notification? = nil) {
         if let status = notification?.object as? Bool {
             if !status {
-                showAlert(alertText: "Ошибка", alertMessage:  "Отсутсвует подключение к интернету", title: "Повторить")
+                presenter?.showAlert()
             }
         }
     }
 }
 
 extension MainViewController: MainViewProtocol {
+    func showConnectAlert() {
+        showAlert(alertText: Constants.alertError, alertMessage: Constants.alertConnectionLost, title: Constants.alertRepeat)
+    }
+    
     func success() {
         view().tableView.reloadData()
     }
@@ -67,7 +62,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! CustomMainCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as? CustomMainCell else { return UITableViewCell()}
         if let data = presenter?.entries?.data[indexPath.section][indexPath.row] {
             cell.configure(entries: data)
         }
@@ -75,7 +70,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return Constants.tableViewHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

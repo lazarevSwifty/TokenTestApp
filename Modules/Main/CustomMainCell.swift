@@ -47,7 +47,7 @@ class CustomMainCell: UITableViewCell {
             bodyTextView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0),
             bodyTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: 5),
             bodyTextView.rightAnchor.constraint(equalTo: rightAnchor, constant: -5),
-            bodyTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5)
+            bodyTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
 }
